@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import styles from './Boox.css';
+import { CSSTransitionGroup } from 'react-transition-group';
 
 class Boox extends Component {
   state = {
@@ -9,17 +9,20 @@ class Boox extends Component {
   render() { 
     const { clicked } = this.state;
     return (
-      <div
-        className={styles.boox}
-        style={clicked ? { background: 'white' } : null}
-        onClick={() => this.setState({ clicked: true })}
-      >
-        {
-          clicked &&
-          [...Array(4)].map((n, i) => (
-            <Boox key={i}/>
-          ))
-        }
+      <div onClick={() => this.setState({ clicked: true })}>
+        <CSSTransitionGroup
+          transitionName="bounce"
+          transitionEnterTimeout={500}
+          transitionLeaveTimeout={300}
+          style={clicked ? { background: 'white' } : null}
+        >
+          {
+            clicked &&
+            [...Array(4)].map((n, i) => (
+              <Boox key={i}/>
+            ))
+          }
+        </CSSTransitionGroup>
       </div>
     );
   }
